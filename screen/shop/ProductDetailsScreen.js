@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
         marginVertical:20,
     },
     description:{
-        fontSize: 25,
+        fontSize: 18,
         marginHorizontal:20,
     },
     buttonCont:{

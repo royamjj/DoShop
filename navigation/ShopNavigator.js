@@ -2,16 +2,8 @@ import ProductOverview from '../screen/shop/ProductOverviewScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProductDetail from '../screen/shop/ProductDetailsScreen';
-// const ProductsNavigator = createStackNavigator({
-//     ProductOverview:ProductOverviewScreen,
-// }, {
-//     defaultNavigationOptions:{
-//         headerStyle :{
-//             backgroundColor : Platform.OS==='android' ? Colors.primary :'',
-//         },
-//         headerTintColor: Platform.OS==='android' ? 'white' :Colors.primary,
-//     }
-// });
+import CustomHeaderButton from '../components/UI/HeaderButton';
+import CartScreen from '../screen/shop/CartScreen';
 const Stack = createNativeStackNavigator();
 
 function ProductsNavigator() {
@@ -21,11 +13,24 @@ function ProductsNavigator() {
         <Stack.Screen 
         name="Home" 
         component={ProductOverview.ProductOverviewScreen} 
-        options={ProductOverview.styling} />
+        options={({ navigation }) => ({
+          ...ProductOverview.styling,
+          headerRight: () => (
+            <CustomHeaderButton onPress={() => navigation.navigate('Cart')}/>
+          ),
+        })}
+        />
         <Stack.Screen 
         name="Details" 
         component={ProductDetail.ProductDetailScreen} 
         options={ProductDetail.styling}
+         />
+         <Stack.Screen 
+        name="Cart" 
+        component={CartScreen.CartScreenPage} 
+        options={
+          CartScreen.styling
+        }
          />
       </Stack.Navigator>
     </NavigationContainer>
@@ -33,3 +38,4 @@ function ProductsNavigator() {
 }
 
 export default ProductsNavigator;
+
