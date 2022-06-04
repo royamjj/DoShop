@@ -1,13 +1,14 @@
-import { View ,Text, Image, FlatList, Button, StyleSheet} from "react-native";
+import { View ,Text, FlatList, Button, StyleSheet} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Colors from "../../constants/colors";
 import CartItem from "../../components/shop/CartItem";
 import * as CartActions from '../../store/actions/CartAction';
+import * as OrderActions from '../../store/actions/orderActions';
+
 
 const CartScreenPage = props =>{
     const dispatch = useDispatch();
     const cart = useSelector(state => state.cart);
-    const CART = cart.items;
     let keys = Object.keys(cart.items);
     keys.sort();
     let items = [];
@@ -24,7 +25,14 @@ const CartScreenPage = props =>{
         <View style={sytles.container}>
             <View style={sytles.summary}>
                 <Text style={sytles.total}>Total: <Text style={sytles.price}>${cart.totalAmount.toFixed(2)}</Text></Text>
-                <Button disabled={items.length===0} title="Order now" color={Colors.primary}/>
+                <Button 
+                disabled={items.length===0} 
+                title="Order now" 
+                color={Colors.primary}
+                onPress={()=>{
+                    dispatch(OrderActions.addOrder(items,cart.totalAmount.toFixed(2)))
+                    console.log(cart.totalAmount.toFixed(2))
+                }}/>
             </View>
             <FlatList
             showsVerticalScrollIndicator={false}
